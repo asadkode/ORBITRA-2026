@@ -1,5 +1,5 @@
 // ORBITA service worker: oflayn ishlash uchun. Fayl nomlari hash bilan, shuning uchun kesh xavfsiz.
-const V = "orbita-v3";
+const V = "orbita-v4";
 const CORE = ["./", "./index.html", "./manifest.webmanifest", "./logo.png", "./logo-mark.png", "./favicon.png", "./icon-192.png"];
 self.addEventListener("install", (e) => { e.waitUntil(caches.open(V).then((c) => c.addAll(CORE)).then(() => self.skipWaiting())); });
 self.addEventListener("activate", (e) => { e.waitUntil(caches.keys().then((k) => Promise.all(k.filter((x) => x !== V).map((x) => caches.delete(x)))).then(() => self.clients.claim())); });

@@ -36,8 +36,7 @@
   function warn(e) { console.warn("[ORBITA cloud]", e && e.code || e); }
 
   function publish(docs) {
-    var me = user && user.uid;
-    window.__orbitaPlayers = docs.filter(function (d) { return d.id !== me; }).map(function (d) {
+    window.__orbitaPlayers = docs.map(function (d) {
       var x = d.data(); return { id: d.id, name: x.name, title: x.title, level: x.level, xp: x.xp, avatar: x.avatar, avatarFrame: x.avatarFrame, rankIndex: x.rankIndex };
     });
     window.dispatchEvent(new Event("orbita-players"));
@@ -122,7 +121,7 @@
     A.onAuthStateChanged(api.auth, async function (u) {
       user = u; ready = false;
       if (u) { sessionStorage.removeItem("orbita-signed-out"); ready = await restore(); if (ready) { push(); } }
-      publish([]); tick();
+      tick();
     });
     new MutationObserver(function () { requestAnimationFrame(tick); }).observe(document.getElementById("root") || document.body, { childList: true, subtree: true });
     tick();
